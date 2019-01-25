@@ -20,15 +20,6 @@ module.exports={
     },
     getData: () => data,
 
-    getDataByDate: (date)=>{
-        const id = data.findIndex(product => product.date === date);
-        if(id>=0){
-            return data.slice(id+1);
-        }
-        else{
-            return null;
-        }
-    },
 
     addProduct: (product) => {
         product.id = nanoid(8);
@@ -49,15 +40,11 @@ module.exports={
     },
 
     changeProduct: (product) => {
-
-        const idDataChange = product.id;
-        const id = data.findIndex(tmpProduct => tmpProduct.id === idDataChange);
-
+        const id = data.findIndex(tmpProduct => tmpProduct.id === product.id);
         if(id>=0){
             data[id].name = product.name;
-            data[id].message = product.message;
+            data[id].description = product.description;
             data[id].price = product.price;
-
 
             let contents = JSON.stringify(data, null, 2);
 

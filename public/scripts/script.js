@@ -1,7 +1,5 @@
 
-let globalArray = [];
-
-let msgList, errorMsg, author, textMessage;
+let msgList, errorMsg;
 let squarespaceModal;
 let baseURL;
 
@@ -10,35 +8,19 @@ $(() => {
     baseURL = location.href;
     msgList = $('#msgList');
     errorMsg = $('#errorMsg');
-    author = $('#author');
-    textMessage = $('#textMessage');
     squarespaceModal = $("#squarespaceModal");
 
-
-    let fillArray = (data) =>{
-        if(data.length) {
-            for (let i = 0; i < data.length; i++) {
-                globalArray.push(data[i]);
-            }
-        }
-        printMessage(globalArray);
-        //console.log(globalArray);
-    };
-
-
     let printMessage = (data) =>{
-        console.log(data);
-        let list = "";
 
-        let container = $('#msgList');
-
+        let container = msgList;
+        container.empty();
         $('#wrapper').append(container);
         for(let i = 0; i < data.length; i++) {
             let div = $('<div id="mess" class="col">');
             let form = $('<form>');
             form.attr("id", data[i].id);
             form.attr("enctype", "multipart/form-data");
-            //form.attr("method", "POST");
+
             let name = $(`<input type="text" name="name" id="name${i}">`).val(data[i].name);
             let description = $(`<input type="text" name="description" id="description${i}">`).val(data[i].description);
             let price = $(`<input type="number" name="price" id="price${i}">`).val(data[i].price);
@@ -46,7 +28,7 @@ $(() => {
             if(data[i].image)
             {
                 let image = $('<img height="150">');
-                image.attr("src", "http://localhost:8000/uploads/" + data[i].image);
+                image.attr("src", baseURL + "/uploads/" + data[i].image);
 
                 let imgDiv = $('<div id="mess" class="message-image">');
                 imgDiv.append(image);
@@ -62,16 +44,14 @@ $(() => {
             $(`#saveChanges${i}`).click((e)=>{
 
                 e.preventDefault();
-                console.log( document.getElementById('formData'));
-                console.log( $(`#${data[i].id}`)[0]);
+
                 const formData  = {
                     "id": data[i].id,
                     "name": $(`#name${i}`).val(),
                     "description": $(`#description${i}`).val(),
                     "price": $(`#price${i}`).val()
                 };
-                //const formData = new FormData($(`#${data[i].id}`).serializeArray());
-                console.log(formData);
+
                 $.ajax(
                     {
                         headers: {
@@ -89,22 +69,17 @@ $(() => {
                         }
                     }
                 ).then((responce) =>{
-                        console.log(responce);
                         errorMsg.empty();
                         if(responce.code) errorMsg.html(responce.message);
                         else errorMsg.html("Данные успешно сохранены")
                 });
 
             });
-
-
-
         }
-
     };
 
     let sendAjax=(type='GET', data='')=> {
-        console.log(window.location.href);
+
         return $.ajax(
             {
                 url: baseURL + 'products',
@@ -131,8 +106,6 @@ $(() => {
     };
 
 
-
-
     $("#showForm").click((e)=>{
         e.preventDefault();
         squarespaceModal.modal('show');
@@ -149,19 +122,19 @@ $(() => {
         squarespaceModal.modal('hide');
 
         const data = new FormData(document.getElementById("formData"));
-        console.log(data);
+
         sendAjax("POST", data)
             .then((responce) =>{
                 errorMsg.empty();
+                getAllProduct().then(responce => {
+                    printMessage(responce)
+                });
             });
     });
-
-    console.log($('#saveChanges').text());
 
 
 
     getAllProduct().then(responce => {
-        console.log(responce);
         printMessage(responce)
     });
 
