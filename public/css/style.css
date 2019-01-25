@@ -1,0 +1,62 @@
+html,body, .wrapper, .col{
+	height:auto;
+}
+.wrapper{
+	overflow: hidden;
+}
+.col{
+	float:left;
+	border-style: solid;
+	border-width: thin;
+	background-color: antiquewhite;
+
+}
+.one{
+	width:70%;
+	text-align: center;
+
+
+}
+.two{
+	width:30%;
+	background-color: green;
+	text-align: center;
+
+}
+.header{
+	height: 60px;
+
+	background-color: blue;
+	padding-left: 10px;
+	padding-top: 10px;
+	padding-right: 10px;
+
+
+}
+
+a {text-decoration: none; color: red;}
+a:hover {text-decoration: none; color: darkred;}
+
+.message-image{
+	//width:10%;
+
+	background-color: darkred;
+	float: left;
+
+}
+.message-text{
+
+	height: 150px;
+
+	//background-color: green;
+	//padding-top: 20px;
+	padding: 20px 20px 20px 20px;
+	display: flex;
+
+
+}
+.message-author{
+	width: 100%;
+	text-align: center;
+	color: darkred;
+}

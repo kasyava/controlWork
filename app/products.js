@@ -1,4 +1,30 @@
 const express = require('express');
+const multer = require('multer');
+const path = require("path");
+const nanoid = require('nanoid');
+
+
+
+const config = require('../config');
+
+
+
+const storage = multer.diskStorage({
+    destination(req, file, cd){
+        cd(null, config.uploadPath)
+    },
+    filename(req, file, cd){
+        cd(null, nanoid() + path.extname(file.originalname))
+    }
+});
+
+const upload = multer({storage});
+
+
+
+
+
+
 const router = express.Router();
 
 
@@ -20,7 +46,7 @@ const createRouter = ()=>{
         res.send(fileDb.getData());
     });
 
-    router.post('/', (req, res)=>{
+    router.post('/', upload.single ("image"), (req, res)=>{
         console.log(req.body);
         const message = req.body;
         if(!message.description){
@@ -31,6 +57,9 @@ const createRouter = ()=>{
             res.send({code:404, message: 'Price error'});
             return;
         }
+
+
+        if(req.file) message.image = req.file.filename;
 
         fileDb.addProduct(message).then(result =>{
             res.send(result);
