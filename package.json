@@ -1,0 +1,29 @@
+{
+  "name": "controlwork",
+  "version": "1.0.0",
+  "description": "first control work",
+  "main": "server.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "multer": "^1.4.1",
+    "nanoid": "^2.0.1",
+    "nodemon": "^1.18.9"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kasyava/controlWork.git"
+  },
+  "author": "kasyava",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kasyava/controlWork/issues"
+  },
+  "homepage": "https://github.com/kasyava/controlWork#readme"
+}
