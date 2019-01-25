@@ -66,6 +66,23 @@ const createRouter = ()=>{
         });
 
     });
+    router.post('/change',(req, res)=>{
+        console.log(req.body);
+        const product = req.body;
+        if(!product.description || !product.description.length){
+            res.send({code:404, message: 'Description error'});
+            return;
+        }
+        if(!product.price || !product.price.length){
+            res.send({code:404, message: 'Price error'});
+            return;
+        }
+
+        fileDb.changeProduct(product).then(result =>{
+            res.send(result);
+        });
+
+    });
 
 
 

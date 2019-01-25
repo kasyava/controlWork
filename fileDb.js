@@ -46,6 +46,33 @@ module.exports={
                 }
             });
         });
+    },
+
+    changeProduct: (product) => {
+
+        const idDataChange = product.id;
+        const id = data.findIndex(tmpProduct => tmpProduct.id === idDataChange);
+
+        if(id>=0){
+            data[id].name = product.name;
+            data[id].message = product.message;
+            data[id].price = product.price;
+
+
+            let contents = JSON.stringify(data, null, 2);
+
+            return new Promise((resolve, reject) =>{
+                fs.writeFile('./products.json', contents, err =>{
+                    if(err) reject();
+                    else{
+                        resolve(product);
+                    }
+                });
+            });
+        }
+        else{
+            return null;
+        }
     }
 
 };
