@@ -8,7 +8,6 @@ const nanoid = require('nanoid');
 const config = require('../config');
 
 
-
 const storage = multer.diskStorage({
     destination(req, file, cd){
         cd(null, config.uploadPath)
@@ -44,7 +43,6 @@ const createRouter = ()=>{
             return;
         }
 
-
         if(req.file) message.image = req.file.filename;
 
         fileDb.addProduct(message).then(result =>{
@@ -68,8 +66,6 @@ const createRouter = ()=>{
             res.send(result);
         });
     });
-
-
 
     return router;
 };
